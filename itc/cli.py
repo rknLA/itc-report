@@ -20,13 +20,13 @@ def main():
     parser.add_argument('-c', '--cache_dir',
             help='Where to store temporary files during processing',
             default='build/cache')
-    parser.add_argument('-w', '--wipe_cache',
-            help='Wipe the cache when complete?',
+    parser.add_argument('-k', '--keep_cache',
+            help='Keep the cache when complete?',
             type=bool,
             default=False)
     parser.add_argument('-v', '--verbosity',
             help='Logging verbosity',
-            default='debug')
+            default='info')
     parser.add_argument('-o', '--output',
             help='Where to write the output',
             default='build/')
@@ -37,4 +37,4 @@ def main():
     report.process(args.input,
                    args.cache_dir,
                    args.output,
-                   args.wipe_cache)
+                   args.keep_cache)

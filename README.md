@@ -2,6 +2,12 @@
 
 Help/consolidation of iTunes Connect Report zips
 
+
+## Usage
+
+`python itc my_reports/2016-11.zip`
+
+
 ### Private data
 
 Put your own reports in the `my_reports` directory.

@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import shutil
+import sys
 import zipfile
 
 
@@ -146,6 +147,22 @@ def write_reports(reports, output_dest, input_path):
 
     If output_dest is a dir, the filename is inferred from `input_path`
     """
+    if output_dest is None:
+        logging.info("no output dest, writing to stdout")
+        out_file = sys.stdout
+    else:
+        logging.info("Writing reports to %s", output_dest)
+        output_path = resolve_output_file(output_dest, input_path)
+        out_file = open(output_path, 'w')
+    try:
+        json.dump(reports, out_file, indent=2, sort_keys=False,
+                  ensure_ascii=False)
+    finally:
+        if output_dest is not None:
+            out_file.close()
+
+
+def resolve_output_file(output_dest, input_path):
     if os.path.isdir(output_dest) or os.path.basename(output_dest) == '':
         input_basename = os.path.basename(input_path)
         input_fn, ext = os.path.splitext(input_basename)
@@ -154,7 +171,4 @@ def write_reports(reports, output_dest, input_path):
     output_dir = os.path.dirname(output_dest)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-
-    with open(output_dest, 'w') as f:
-        json.dump(reports, f, indent=2, sort_keys=False, ensure_ascii=False)
-    logging.info("Writing reports to %s", output_dest)
+    return output_dest

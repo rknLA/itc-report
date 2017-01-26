@@ -28,8 +28,7 @@ def main():
             help='Logging verbosity',
             default='info')
     parser.add_argument('-o', '--output',
-            help='Where to write the output',
-            default='build/')
+            help='Where to write the output')
     args = parser.parse_args()
 
     logging.basicConfig(level=LOG_LEVEL_MAP[args.verbosity])
